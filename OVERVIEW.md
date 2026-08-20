@@ -1,6 +1,6 @@
 # Time Entry for Tempough
 
-Create Tempough time entries without leaving an Azure DevOps work item. The extension adds the work item ID, title, and URL to each entry so time records retain useful delivery context.
+Create Tempough time entries without leaving an Azure DevOps work item. The extension adds the Tempough project code and work item ID and title to each entry so time records retain useful delivery context.
 
 This is an independent integration published by ITNobody. It is not affiliated with, endorsed by, or sponsored by Tempough.
 
@@ -11,7 +11,7 @@ This is an independent integration published by ITNobody. It is not affiliated w
 - Create a time entry from an Azure DevOps work item.
 - Select active Tempough projects and their tasks.
 - Include the date, hours, billable status, and optional notes.
-- Add the Azure DevOps work item ID, title, and URL to the entry notes.
+- Add the Tempough project code and Azure DevOps work item ID and title to the entry notes.
 - Remember the last project and task selection for each user.
 
 ## Requirements
@@ -30,7 +30,7 @@ This is an independent integration published by ITNobody. It is not affiliated w
 
 ## Data and credentials
 
-The extension reads the current work item's ID, title, type, and URL. When you create an entry, its notes include the work item ID, title, URL, and any notes you enter.
+The extension reads the current work item's ID, title, and type. When you create an entry, its notes include the selected Tempough project code, work item ID and title, and any notes you enter.
 
 Your API URL, API token, and last project and task selection are stored in Azure DevOps user-scoped Extension Data. This storage is not a dedicated secrets vault. The token is sent only to the configured Tempough API endpoint as a bearer token. The extension does not include publisher-operated analytics or telemetry.
 

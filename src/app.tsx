@@ -55,13 +55,14 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
+  const selectedProject = projects.find((project) => project.id === Number(projectId));
   const selectedTask = tasks.find((task) => task.taskId === Number(taskId));
   const notesPreview = useMemo(() => {
-    if (!workItem || workItem.id === null || !workItem.url) {
+    if (!workItem || workItem.id === null || !selectedProject) {
       return "";
     }
-    return buildNotes(workItem, notes);
-  }, [notes, workItem]);
+    return buildNotes(workItem, selectedProject.code, notes);
+  }, [notes, selectedProject, workItem]);
 
   useEffect(() => {
     void Promise.all([
@@ -247,10 +248,10 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     if (!connection) {
       return setError("Configure a Tempough connection first.");
     }
-    if (!workItem || workItem.id === null || !workItem.url) {
+    if (!workItem || workItem.id === null) {
       return setError("Save the work item before logging time.");
     }
-    if (selectedProjectId === null || !selectedTask) {
+    if (selectedProjectId === null || !selectedProject || !selectedTask) {
       return setError("Select a project and task.");
     }
     if (!/^\d+(?:\.\d{1,2})?$/.test(hours) || numericHours <= 0 || numericHours > 24) {
@@ -263,7 +264,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
         taskId: selectedTask.taskId,
         date,
         hours,
-        notes: buildNotes(workItem, notes),
+        notes: buildNotes(workItem, selectedProject.code, notes),
         billable: selectedTask.taskBillableDefault,
       });
       await store.setLastSelection({ projectId: selectedProjectId, taskId: selectedTask.taskId });

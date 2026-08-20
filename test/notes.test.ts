@@ -9,20 +9,18 @@ const workItem = {
 };
 
 describe("buildNotes", () => {
-  it("adds the Azure DevOps reference before user notes", () => {
-    expect(buildNotes(workItem, "Investigated timeout behavior.")).toBe(
-      "[#1234] Fix health checks\nhttps://dev.azure.com/example/project/_workitems/edit/1234\n\nInvestigated timeout behavior.",
+  it("adds the project and Azure DevOps reference before user notes", () => {
+    expect(buildNotes(workItem, "PLAT", "Investigated timeout behavior.")).toBe(
+      "[PLAT #1234 - Fix health checks] Investigated timeout behavior.",
     );
   });
 
-  it("omits the trailing separator when user notes are empty", () => {
-    expect(buildNotes(workItem, "  ")).toBe(
-      "[#1234] Fix health checks\nhttps://dev.azure.com/example/project/_workitems/edit/1234",
-    );
+  it("omits the trailing space when user notes are empty", () => {
+    expect(buildNotes(workItem, "PLAT", "  ")).toBe("[PLAT #1234 - Fix health checks]");
   });
 
   it("rejects unsaved work items", () => {
-    expect(() => buildNotes({ ...workItem, id: null, url: null }, "")).toThrow(
+    expect(() => buildNotes({ ...workItem, id: null, url: null }, "PLAT", "")).toThrow(
       "Save the work item",
     );
   });

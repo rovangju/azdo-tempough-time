@@ -79,7 +79,7 @@ describe("App", () => {
         taskId: 30,
         hours: "1.5",
         billable: true,
-        notes: expect.stringContaining("[#1234] Fix health checks"),
+        notes: "[PLAT #1234 - Fix health checks] Reviewed rollout.",
       }),
     );
     expect(store.setLastSelection).toHaveBeenCalledWith({ projectId: 10, taskId: 30 });

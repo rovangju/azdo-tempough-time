@@ -2,8 +2,8 @@
 
 An Azure DevOps work-item extension for creating enriched [Tempough](https://tempough.com/) time entries directly from task.
 
-The extension adds a time-entry form to Azure DevOps work items. It uses the work-item ID, title, and URL to enrich entries sent to
-Tempough.
+The extension adds a time-entry form to Azure DevOps work items. It uses the Tempough project code and work-item ID and title to enrich
+entries sent to Tempough.
 
 ![Time tracking input form](docs/preview.png)
 

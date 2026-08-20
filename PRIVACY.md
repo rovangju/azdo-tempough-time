@@ -6,11 +6,11 @@ This policy describes data handling by **Time Entry for Tempough**, an independe
 
 ## Data the extension accesses
 
-The extension accesses the current Azure DevOps work item's ID, title, type, and URL. It also processes the Tempough API URL and API token entered by the user, selected Tempough project and task identifiers, time-entry fields, and user-entered notes.
+The extension accesses the current Azure DevOps work item's ID, title, and type. It also processes the Tempough API URL and API token entered by the user, selected Tempough project and task identifiers, time-entry fields, and user-entered notes.
 
 ## How data is used and transmitted
 
-The extension uses work-item data to add context to a time entry. When a user submits an entry, the extension sends the selected project and task, date, hours, billable status, and notes containing the work item ID, title, URL, and user-entered text directly from the user's browser to the configured Tempough API endpoint.
+The extension uses work-item data to add context to a time entry. When a user submits an entry, the extension sends the selected project and task, date, hours, billable status, and notes containing the Tempough project code, work item ID and title, and user-entered text directly from the user's browser to the configured Tempough API endpoint.
 
 The API token is sent to that endpoint as a bearer token. Users should configure only a trusted Tempough API URL.
 

@@ -1,8 +1,31 @@
 import { resolve } from "node:path";
 import basicSsl from "@vitejs/plugin-basic-ssl";
 import react from "@vitejs/plugin-react";
-import { loadEnv } from "vite";
+import { loadEnv, type Plugin } from "vite";
 import { defineConfig } from "vitest/config";
+
+function azureDevOpsTrace(): Plugin {
+  return {
+    name: "azure-devops-trace",
+    configureServer(server) {
+      server.middlewares.use((request, _response, next) => {
+        if (request.url?.includes("work-item-form")) {
+          console.info(`[Azure DevOps request] ${request.method} ${request.url}`);
+        }
+        next();
+      });
+      server.middlewares.use("/__azdo_trace", (request, response) => {
+        let body = "";
+        request.on("data", (chunk: Buffer) => { body += chunk.toString(); });
+        request.on("end", () => {
+          console.info(`[Azure DevOps iframe] ${body}`);
+          response.statusCode = 204;
+          response.end();
+        });
+      });
+    },
+  };
+}
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
@@ -15,7 +38,7 @@ export default defineConfig(({ mode }) => {
 
   return {
   base: "./",
-  plugins: [react(), ...(process.env.AZDO_HTTPS === "1" ? [basicSsl()] : [])],
+  plugins: [react(), azureDevOpsTrace(), ...(process.env.AZDO_HTTPS === "1" ? [basicSsl()] : [])],
   server: {
     strictPort: true,
     proxy: tempoughApiUrl ? {

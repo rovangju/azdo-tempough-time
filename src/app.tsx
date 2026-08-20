@@ -234,16 +234,8 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
   return (
     <main className="app-shell">
       {developmentControls}
-      <header className="app-header">
-        <div>
-          <p className="eyebrow">TEMPOUGH</p>
-          <h1>Log time</h1>
-        </div>
-        {workItem && <span className="work-item-type">{workItem.type}</span>}
-      </header>
-
       <details className="settings" open={!connection}>
-        <summary>Connection settings</summary>
+        <summary>Settings</summary>
         <form className="settings-grid" onSubmit={(event) => void saveConnection(event)}>
           <label>
             API root

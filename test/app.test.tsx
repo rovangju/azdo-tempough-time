@@ -49,7 +49,7 @@ describe("App", () => {
     fireEvent.click(testButton);
 
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Connection test succeeded"));
-    expect(screen.getByRole("status")).toHaveClass("status-flash");
+    expect(screen.getByRole("status").closest("form")).toHaveClass("settings-grid");
     expect(client.listProjects).toHaveBeenLastCalledWith({
       apiRoot: "https://new.example.test/api/v1",
       token: "new-secret",

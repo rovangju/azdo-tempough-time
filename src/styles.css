@@ -34,6 +34,8 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 .button-row { display: flex; gap: 8px; }
 .button-secondary { background: transparent; color: inherit; border: 1px solid #8d887f; }
 .submit-button { justify-self: start; min-width: 150px; }
+.connection-message { margin: 0; color: #287a45; font-size: 12px; font-weight: 650; opacity: 1; transition: opacity 500ms ease-out; }
+.connection-message-fading { opacity: 0; }
 
 .preview {
   color: var(--text-primary-color, #202226);
@@ -53,13 +55,8 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   border-left: 3px solid #287a45;
   background: color-mix(in srgb, var(--background-color, #fffdfa) 88%, #287a45);
 }
-.status-flash { animation: status-flash 900ms ease-out; }
-@keyframes status-flash {
-  0%, 35% { box-shadow: 0 0 0 3px color-mix(in srgb, #287a45 55%, transparent); }
-  100% { box-shadow: 0 0 0 0 transparent; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .status-flash { animation: none; }
+  .connection-message { transition: none; }
 }
 .notice { margin: 0; color: var(--text-primary-color, #202226); }
 .dev-controls { margin-bottom: 12px; padding: 8px 10px; background: #252a30; color: #f5f5f5; font-size: 12px; }

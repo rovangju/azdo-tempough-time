@@ -50,8 +50,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
   const [notes, setNotes] = useState("");
   const [busy, setBusy] = useState(false);
   const [connectionValidated, setConnectionValidated] = useState(false);
+  const [connectionMessage, setConnectionMessage] = useState("");
+  const [connectionMessageFading, setConnectionMessageFading] = useState(false);
   const [message, setMessage] = useState("");
-  const [flashMessage, setFlashMessage] = useState(false);
   const [error, setError] = useState("");
 
   const selectedTask = tasks.find((task) => task.taskId === Number(taskId));
@@ -160,6 +161,21 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     return () => { cancelled = true; };
   }, [client, connection, projectId]);
 
+  useEffect(() => {
+    if (!connectionMessage) {
+      return;
+    }
+    const fadeTimer = window.setTimeout(() => setConnectionMessageFading(true), 3_000);
+    const clearTimer = window.setTimeout(() => {
+      setConnectionMessage("");
+      setConnectionMessageFading(false);
+    }, 3_500);
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(clearTimer);
+    };
+  }, [connectionMessage]);
+
   function connectionFromFields(): Connection {
     const next = { apiRoot: normalizeApiRoot(apiRoot), token: token.trim() };
     if (!next.token) {
@@ -172,7 +188,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     event.preventDefault();
     setError("");
     setMessage("");
-    setFlashMessage(false);
+    setConnectionMessage("");
     try {
       const next = connectionFromFields();
       await store.setConnection(next);
@@ -187,12 +203,12 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setBusy(true);
     setError("");
     setMessage("");
-    setFlashMessage(false);
+    setConnectionMessage("");
+    setConnectionMessageFading(false);
     try {
       await client.listProjects(connectionFromFields());
       setConnectionValidated(true);
-      setMessage("Connection test succeeded.");
-      setFlashMessage(true);
+      setConnectionMessage("Connection test succeeded.");
     } catch (reason) {
       setConnectionValidated(false);
       setError(formatApiError(reason));
@@ -208,8 +224,8 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setProjects([]);
     setTasks([]);
     setConnectionValidated(false);
+    setConnectionMessage("");
     setMessage("Connection cleared.");
-    setFlashMessage(false);
     setError("");
   }
 
@@ -226,7 +242,6 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     event.preventDefault();
     setError("");
     setMessage("");
-    setFlashMessage(false);
     const selectedProjectId = toPositiveId(projectId);
     const numericHours = Number(hours);
     if (!connection) {
@@ -279,6 +294,11 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
             API token
             <input type="password" value={token} onChange={(event) => setToken(event.target.value)} autoComplete="off" required />
           </label>
+          {connectionMessage && (
+            <p className={`connection-message${connectionMessageFading ? " connection-message-fading" : ""}`} role="status">
+              {connectionMessage}
+            </p>
+          )}
           <div className="button-row">
             <button type="submit" disabled={busy}>Save</button>
             <button type="button" className="button-secondary" disabled={busy} onClick={() => void testConnection()}>Test</button>
@@ -325,7 +345,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
           </details>
         ) : null}
         {error && <pre className="status status-error" role="alert">{error}</pre>}
-        {message && <p className={`status status-success${flashMessage ? " status-flash" : ""}`} role="status">{message}</p>}
+        {message && <p className="status status-success" role="status">{message}</p>}
         <button type="submit" className="submit-button" disabled={busy || !connection || workItem?.id === null}>
           {busy ? "Working..." : "Create time entry"}
         </button>

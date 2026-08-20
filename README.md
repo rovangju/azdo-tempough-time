@@ -24,11 +24,11 @@ the UI and is not read from an environment file.
 
 ### Azure DevOps
 
-Build `make package-dev`, privately install that development VSIX once, then run `make dev-azdo`.
+Build `make package-dev`, privately install that development VSIX once, then run `make dev-azdo`. Configure the real API root in
+`.env.local` first.
 
 The installed manifest loads current source from the local HTTPS server, so ordinary source changes need only a browser refresh. Manifest
-changes require rebuilding and updating the development VSIX . This mode calls Tempough directly, so the API must allow the extension origin
-through CORS.
+changes require rebuilding and updating the development VSIX. API requests in this mode use the local Vite proxy to avoid browser CORS.
 
 ## Engineering principles
 

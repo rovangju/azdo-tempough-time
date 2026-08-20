@@ -52,12 +52,13 @@ async function start(): Promise<void> {
     trace("extension data manager resolved");
     const host = SDK.getHost();
     const project = SDK.getPageContext().webContext.project;
+    const transportRoot = import.meta.env.DEV ? `${window.location.origin}/__tempough` : undefined;
     createRoot(root).render(
       <StrictMode>
         <App
           host={new AzureDevOpsWorkItemHost(formService, host.name, project.name)}
           store={new AzureDevOpsSettingsStore(dataManager)}
-          client={new FetchTempoughClient()}
+          client={new FetchTempoughClient(transportRoot)}
         />
       </StrictMode>,
     );

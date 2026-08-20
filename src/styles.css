@@ -29,7 +29,7 @@ input, textarea { width: 100%; border: 1px solid #aaa49a; border-radius: 3px; pa
 input:focus, textarea:focus { outline: 2px solid #176a75; outline-offset: 1px; }
 textarea { resize: vertical; }
 
-button { border: 0; border-radius: 3px; padding: 8px 12px; background: #176a75; color: white; cursor: pointer; font-weight: 650; }
+button { border: 0; border-radius: 3px; padding: 8px 12px; background: rgb(13, 59, 46); color: white; cursor: pointer; font-weight: 650; }
 button:disabled { cursor: not-allowed; opacity: .55; }
 .button-row { display: flex; gap: 8px; }
 .button-secondary { background: transparent; color: inherit; border: 1px solid #8d887f; }
@@ -60,10 +60,11 @@ button:disabled { cursor: not-allowed; opacity: .55; }
 }
 .notice { margin: 0; color: var(--text-primary-color, #202226); }
 .dev-controls { margin-bottom: 12px; padding: 8px 10px; background: #252a30; color: #f5f5f5; font-size: 12px; }
+.dev-controls select, .dev-controls option { color: #f5f5f5; background: #252a30; }
 .searchable-select { position: relative; }
-.select-options { position: absolute; z-index: 10; width: 100%; max-height: 180px; margin: 3px 0 0; padding: 3px; overflow-y: auto; list-style: none; border: 1px solid #aaa49a; border-radius: 3px; background: var(--background-color, #fff); box-shadow: 0 5px 14px rgb(0 0 0 / 15%); }
-.select-options button { width: 100%; padding: 7px 8px; text-align: left; color: inherit; background: transparent; font-weight: 400; }
-.select-options button:hover, .select-options button:focus { background: #e7f0f1; }
+.select-options { position: absolute; z-index: 10; width: 100%; max-height: 180px; margin: 3px 0 0; padding: 3px; overflow-y: auto; list-style: none; color: var(--text-primary-color, #202226); border: 1px solid #aaa49a; border-radius: 3px; background: var(--background-color, #fff); box-shadow: 0 5px 14px rgb(0 0 0 / 15%); }
+.select-options button { width: 100%; padding: 7px 8px; text-align: left; color: var(--text-primary-color, #202226); background: transparent; font-weight: 400; }
+.select-options button:hover, .select-options button:focus { color: var(--text-primary-color, #202226); background: color-mix(in srgb, var(--background-color, #fff) 88%, var(--text-primary-color, #202226)); }
 .no-options { padding: 7px 8px; color: var(--text-primary-color, #202226); font-size: 12px; opacity: .72; }
 
 @media (max-width: 520px) {

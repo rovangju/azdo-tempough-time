@@ -343,7 +343,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
           <p className="notice">Save the work item before logging time.</p>
         ) : notesPreview ? (
           <details className="preview">
-            <summary>Entry notes preview</summary>
+            <summary>Preview entry</summary>
             <pre>{notesPreview}</pre>
           </details>
         ) : null}

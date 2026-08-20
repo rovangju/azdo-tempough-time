@@ -1,5 +1,6 @@
 import type { IExtensionDataManager } from "azure-devops-extension-api/Common/CommonServices";
-import type { Connection, LastSelection, SettingsStore } from "../domain";
+import type { Connection, LastSelection } from "../../domain";
+import type { SettingsStore } from "../../ports/settings-store";
 
 const options = { scopeType: "User" };
 

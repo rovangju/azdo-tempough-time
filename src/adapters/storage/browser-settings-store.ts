@@ -1,4 +1,5 @@
-import type { Connection, LastSelection, SettingsStore } from "../domain";
+import type { Connection, LastSelection } from "../../domain";
+import type { SettingsStore } from "../../ports/settings-store";
 
 export class BrowserSettingsStore implements SettingsStore {
   constructor(private readonly namespace = "tempough:v1:local:mock-user") {}

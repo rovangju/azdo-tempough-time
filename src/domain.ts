@@ -43,22 +43,3 @@ export interface TimeEntryRequest {
 export interface TimeEntry extends TimeEntryRequest {
   id: number;
 }
-
-export interface WorkItemHost {
-  getCurrentWorkItem(): Promise<WorkItemContext>;
-}
-
-export interface SettingsStore {
-  getConnection(): Promise<Connection | null>;
-  setConnection(connection: Connection): Promise<void>;
-  getLastSelection(): Promise<LastSelection | null>;
-  setLastSelection(selection: LastSelection): Promise<void>;
-  clearConnection(): Promise<void>;
-  clearAll(): Promise<void>;
-}
-
-export interface TempoughClient {
-  listProjects(connection: Connection): Promise<Project[]>;
-  listProjectTasks(connection: Connection, projectId: number): Promise<ProjectTask[]>;
-  createTimeEntry(connection: Connection, entry: TimeEntryRequest): Promise<TimeEntry>;
-}

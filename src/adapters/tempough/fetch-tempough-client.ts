@@ -2,10 +2,10 @@ import type {
   Connection,
   Project,
   ProjectTask,
-  TempoughClient,
   TimeEntry,
   TimeEntryRequest,
-} from "./domain";
+} from "../../domain";
+import type { TempoughClient } from "../../ports/tempough-client";
 
 export class TempoughApiError extends Error {
   constructor(

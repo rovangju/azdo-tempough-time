@@ -8,10 +8,12 @@ import {
   type IWorkItemFormService,
 } from "azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices";
 import { App } from "./app";
-import { FetchTempoughClient } from "./api";
-import { AzureDevOpsWorkItemHost } from "./host/azure-devops-host";
-import { AzureDevOpsSettingsStore } from "./storage/azure-devops-storage";
+import { AzureDevOpsWorkItemHost } from "./adapters/host/azure-devops-work-item-host";
+import { AzureDevOpsSettingsStore } from "./adapters/storage/azure-devops-settings-store";
+import { FetchTempoughClient } from "./adapters/tempough/fetch-tempough-client";
 
+// Production composition root for the Azure DevOps work-item form contribution:
+// initializes the SDK, connects application ports to Azure DevOps/HTTP adapters, and renders App.
 async function start(): Promise<void> {
   try {
     await SDK.init({ loaded: false, applyTheme: true });

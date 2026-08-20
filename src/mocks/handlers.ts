@@ -3,6 +3,7 @@ import projects from "./fixtures/projects.json";
 import projectTasks from "./fixtures/project-tasks.json";
 import { getMockScenario } from "./scenarios";
 
+// mock HTTP routes and maps the active scenario to the appropriate API response.
 function scenarioResponse() {
   switch (getMockScenario()) {
     case "auth":

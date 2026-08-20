@@ -1,15 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { formatApiError, normalizeApiRoot } from "./api";
+import { formatApiError, normalizeApiRoot } from "./adapters/tempough/fetch-tempough-client";
 import type {
   Connection,
   Project,
   ProjectTask,
-  SettingsStore,
-  TempoughClient,
   WorkItemContext,
-  WorkItemHost,
 } from "./domain";
 import { buildNotes } from "./notes";
+import type { SettingsStore } from "./ports/settings-store";
+import type { TempoughClient } from "./ports/tempough-client";
+import type { WorkItemHost } from "./ports/work-item-host";
 import { SearchableSelect } from "./searchable-select";
 import "./styles.css";
 

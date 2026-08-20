@@ -1,11 +1,11 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app";
-import { FetchTempoughClient } from "./api";
-import { MockWorkItemHost } from "./host/mock-host";
-import { worker } from "./mocks/browser";
+import { MockWorkItemHost } from "./adapters/host/mock-work-item-host";
+import { BrowserSettingsStore } from "./adapters/storage/browser-settings-store";
+import { FetchTempoughClient } from "./adapters/tempough/fetch-tempough-client";
+import { worker } from "./mocks/service-worker";
 import { setMockScenario, type MockScenario } from "./mocks/scenarios";
-import { BrowserSettingsStore } from "./storage/browser-storage";
 
 const useRealApi = new URLSearchParams(window.location.search).get("api") === "real";
 const configuredApiRoot = import.meta.env.VITE_TEMPOUGH_API_ROOT as string | undefined;

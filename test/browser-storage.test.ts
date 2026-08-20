@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BrowserSettingsStore } from "../src/storage/browser-storage";
+import { BrowserSettingsStore } from "../src/adapters/storage/browser-settings-store";
 
 describe("BrowserSettingsStore", () => {
   it("isolates settings by namespace", async () => {

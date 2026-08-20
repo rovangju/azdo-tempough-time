@@ -1,4 +1,6 @@
-import type { WorkItemContext, WorkItemHost } from "../domain";
+// mock Azure DevOps work-item host for local development and tests.
+import type { WorkItemContext } from "../../domain";
+import type { WorkItemHost } from "../../ports/work-item-host";
 
 const mockWorkItem: WorkItemContext = {
   id: 1234,

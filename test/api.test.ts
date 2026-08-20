@@ -1,5 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { FetchTempoughClient, normalizeApiRoot, TempoughApiError } from "../src/api";
+import {
+  FetchTempoughClient,
+  normalizeApiRoot,
+  TempoughApiError,
+} from "../src/adapters/tempough/fetch-tempough-client";
 
 afterEach(() => vi.restoreAllMocks());
 

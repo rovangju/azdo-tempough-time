@@ -1,5 +1,6 @@
 import type { IWorkItemFormService } from "azure-devops-extension-api/WorkItemTracking/WorkItemTrackingServices";
-import type { WorkItemContext, WorkItemHost } from "../domain";
+import type { WorkItemContext } from "../../domain";
+import type { WorkItemHost } from "../../ports/work-item-host";
 
 export class AzureDevOpsWorkItemHost implements WorkItemHost {
   constructor(

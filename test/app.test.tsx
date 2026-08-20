@@ -1,7 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { App } from "../src/app";
-import type { SettingsStore, TempoughClient, WorkItemHost } from "../src/domain";
+import type { SettingsStore } from "../src/ports/settings-store";
+import type { TempoughClient } from "../src/ports/tempough-client";
+import type { WorkItemHost } from "../src/ports/work-item-host";
 
 const host: WorkItemHost = {
   getCurrentWorkItem: async () => ({

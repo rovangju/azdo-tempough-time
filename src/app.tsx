@@ -136,7 +136,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     return () => { cancelled = true; };
   }, [client, connection, projectId]);
 
-  async function saveConnection(event: React.FormEvent): Promise<void> {
+  async function saveConnection(event: React.SubmitEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setError("");
     setMessage("");
@@ -170,7 +170,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setTaskId(id === null ? "" : String(id));
   }
 
-  async function submit(event: React.FormEvent): Promise<void> {
+  async function submit(event: React.SubmitEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setError("");
     setMessage("");

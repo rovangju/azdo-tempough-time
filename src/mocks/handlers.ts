@@ -31,7 +31,9 @@ export const handlers = [
   http.post("*/time-entries/", async ({ request }) => {
     await delay(250);
     const failure = scenarioResponse();
-    if (failure) return failure;
+    if (failure) {
+      return failure;
+    }
     const entry = await request.json() as Record<string, unknown>;
     return HttpResponse.json({ id: 901, ...entry }, { status: 201 });
   }),

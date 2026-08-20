@@ -45,7 +45,9 @@ export function SearchableSelect({
           onFocus={() => { setQuery(""); setOpen(true); }}
           onChange={(event) => { setQuery(event.target.value); setOpen(true); onChange(null); }}
           onKeyDown={(event) => {
-            if (event.key === "Escape") setOpen(false);
+            if (event.key === "Escape") {
+              setOpen(false);
+            }
           }}
         />
       </label>

@@ -35,7 +35,9 @@ export class BrowserSettingsStore implements SettingsStore {
 
   private read<T>(name: string): T | null {
     const value = window.localStorage.getItem(this.key(name));
-    if (!value) return null;
+    if (!value) {
+      return null;
+    }
     try {
       return JSON.parse(value) as T;
     } catch {

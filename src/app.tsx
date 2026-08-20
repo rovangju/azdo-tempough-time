@@ -54,7 +54,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
 
   const selectedTask = tasks.find((task) => task.taskId === Number(taskId));
   const notesPreview = useMemo(() => {
-    if (!workItem || workItem.id === null || !workItem.url) return "";
+    if (!workItem || workItem.id === null || !workItem.url) {
+      return "";
+    }
     return buildNotes(workItem, notes);
   }, [notes, workItem]);
 
@@ -78,17 +80,23 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
   }, [host, store]);
 
   useEffect(() => {
-    if (!connection) return;
+    if (!connection) {
+      return;
+    }
     let cancelled = false;
     setBusy(true);
     setError("");
     void client.listProjects(connection)
       .then((availableProjects) => {
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
         setProjects(availableProjects);
         setMessage("Connection validated.");
         setProjectId((currentProjectId) => {
-          if (!currentProjectId) return currentProjectId;
+          if (!currentProjectId) {
+            return currentProjectId;
+          }
           const selectedProject = availableProjects.find((project) => project.id === Number(currentProjectId));
           if (selectedProject) {
             return currentProjectId;
@@ -98,10 +106,14 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
         });
       })
       .catch((reason: unknown) => {
-        if (!cancelled) setError(formatApiError(reason));
+        if (!cancelled) {
+          setError(formatApiError(reason));
+        }
       })
       .finally(() => {
-        if (!cancelled) setBusy(false);
+        if (!cancelled) {
+          setBusy(false);
+        }
       });
     return () => { cancelled = true; };
   }, [client, connection]);
@@ -116,10 +128,14 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setBusy(true);
     void client.listProjectTasks(connection, selectedProjectId)
       .then((availableTasks) => {
-        if (cancelled) return;
+        if (cancelled) {
+          return;
+        }
         setTasks(availableTasks);
         setTaskId((currentTaskId) => {
-          if (!currentTaskId) return currentTaskId;
+          if (!currentTaskId) {
+            return currentTaskId;
+          }
           const selected = availableTasks.find((task) => task.taskId === Number(currentTaskId));
           if (selected) {
             return currentTaskId;
@@ -128,10 +144,14 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
         });
       })
       .catch((reason: unknown) => {
-        if (!cancelled) setError(formatApiError(reason));
+        if (!cancelled) {
+          setError(formatApiError(reason));
+        }
       })
       .finally(() => {
-        if (!cancelled) setBusy(false);
+        if (!cancelled) {
+          setBusy(false);
+        }
       });
     return () => { cancelled = true; };
   }, [client, connection, projectId]);
@@ -142,7 +162,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setMessage("");
     try {
       const next = { apiRoot: normalizeApiRoot(apiRoot), token: token.trim() };
-      if (!next.token) throw new Error("API token is required.");
+      if (!next.token) {
+        throw new Error("API token is required.");
+      }
       await store.setConnection(next);
       setConnection(next);
       setMessage("Connection saved. Validating with Tempough.");
@@ -176,9 +198,15 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setMessage("");
     const selectedProjectId = toPositiveId(projectId);
     const numericHours = Number(hours);
-    if (!connection) return setError("Configure a Tempough connection first.");
-    if (!workItem || workItem.id === null || !workItem.url) return setError("Save the work item before logging time.");
-    if (selectedProjectId === null || !selectedTask) return setError("Select a project and task.");
+    if (!connection) {
+      return setError("Configure a Tempough connection first.");
+    }
+    if (!workItem || workItem.id === null || !workItem.url) {
+      return setError("Save the work item before logging time.");
+    }
+    if (selectedProjectId === null || !selectedTask) {
+      return setError("Select a project and task.");
+    }
     if (!/^\d+(?:\.\d{1,2})?$/.test(hours) || numericHours <= 0 || numericHours > 24) {
       return setError("Hours must be greater than zero, at most 24, and use no more than two decimal places.");
     }

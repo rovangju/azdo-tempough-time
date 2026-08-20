@@ -20,7 +20,8 @@ The normal development loop starts with `make dev`. UI, validation, storage, and
 DevOps or a Tempough backend.
 
 Open `http://localhost:5173/?api=real` when the browser workflow must be checked against a real Tempough API. The bearer token is entered in
-the UI and is not read from an environment file.
+the UI and is not read from an environment file. The connection `Test` will always succeed when requests use the CORS proxy, so it does not
+verify that the configured API root is directly accessible from the browser.
 
 ### Azure DevOps
 
@@ -29,6 +30,7 @@ Build `make package-dev`, privately install that development VSIX once, then run
 
 The installed manifest loads current source from the local HTTPS server, so ordinary source changes need only a browser refresh. Manifest
 changes require rebuilding and updating the development VSIX. API requests in this mode use the local Vite proxy to avoid browser CORS.
+The connection `Test` therefore always succeeds in this mode and does not verify direct browser access to the configured API root.
 
 ## Engineering principles
 

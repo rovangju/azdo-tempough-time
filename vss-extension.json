@@ -1,0 +1,50 @@
+{
+  "manifestVersion": 1,
+  "id": "tempough-time",
+  "version": "0.1.0",
+  "name": "Tempough Time Tracking",
+  "publisher": "mock-publisher",
+  "description": "Create Tempough time entries from Azure DevOps work items.",
+  "public": false,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services.Cloud"
+    }
+  ],
+  "categories": ["Azure Boards"],
+  "scopes": ["vso.work", "vso.extension.data_write"],
+  "content": {
+    "details": {
+      "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE"
+    }
+  },
+  "contributions": [
+    {
+      "id": "tempough-work-item-form-group",
+      "type": "ms.vss-work-web.work-item-form-group",
+      "description": "Create a Tempough time entry from a work item.",
+      "targets": ["ms.vss-work-web.work-item-form"],
+      "properties": {
+        "name": "Log time to Tempough",
+        "uri": "work-item-form.html",
+        "height": 470
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "dist",
+      "addressable": true,
+      "packagePath": "/"
+    },
+    {
+      "path": "README.md"
+    },
+    {
+      "path": "LICENSE"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "tempough-time-dev",
+  "name": "Tempough Time Tracking [DEV]",
+  "publisher": "mock-publisher",
+  "public": false,
+  "baseUri": "https://localhost:5173"
+}

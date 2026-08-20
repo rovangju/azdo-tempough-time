@@ -11,8 +11,8 @@ export class AzureDevOpsWorkItemHost implements WorkItemHost {
   async getCurrentWorkItem(): Promise<WorkItemContext> {
     const [id, title, type] = await Promise.all([
       this.service.getId(),
-      this.service.getFieldValue("System.Title", false),
-      this.service.getFieldValue("System.WorkItemType", false),
+      this.service.getFieldValue("System.Title", { returnOriginalValue: false }),
+      this.service.getFieldValue("System.WorkItemType", { returnOriginalValue: false }),
     ]);
     const savedId = Number.isInteger(id) && id > 0 ? id : null;
     return {

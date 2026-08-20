@@ -24,7 +24,7 @@ function setup() {
     clearAll: vi.fn(),
   };
   const client: TempoughClient = {
-    listProjects: async () => [{ id: 10, name: "Platform", code: "PLAT", status: "active" }],
+    listProjects: vi.fn(async () => [{ id: 10, name: "Platform", code: "PLAT", status: "active" }]),
     listProjectTasks: async () => [{ id: 20, taskId: 30, taskName: "Development", taskBillableDefault: true, phaseId: null, phaseName: null }],
     createTimeEntry: vi.fn(async (connection, request) => ({ id: 1, ...request })),
   };
@@ -33,6 +33,22 @@ function setup() {
 }
 
 describe("App", () => {
+  it("tests connection fields without saving them", async () => {
+    const { client, store } = setup();
+    const testButton = await screen.findByRole("button", { name: "Test" });
+    await waitFor(() => expect(testButton).not.toBeDisabled());
+    fireEvent.change(screen.getByLabelText("API root"), { target: { value: "https://new.example.test/api/v1/" } });
+    fireEvent.change(screen.getByLabelText("API token"), { target: { value: "new-secret" } });
+    fireEvent.click(testButton);
+
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Connection test succeeded"));
+    expect(client.listProjects).toHaveBeenLastCalledWith({
+      apiRoot: "https://new.example.test/api/v1",
+      token: "new-secret",
+    });
+    expect(store.setConnection).not.toHaveBeenCalled();
+  });
+
   it("submits an enriched time entry and retains selections", async () => {
     const { client, store } = setup();
     const project = await screen.findByRole("combobox", { name: "Project" });

@@ -156,20 +156,39 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     return () => { cancelled = true; };
   }, [client, connection, projectId]);
 
+  function connectionFromFields(): Connection {
+    const next = { apiRoot: normalizeApiRoot(apiRoot), token: token.trim() };
+    if (!next.token) {
+      throw new Error("API token is required.");
+    }
+    return next;
+  }
+
   async function saveConnection(event: React.SubmitEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     setError("");
     setMessage("");
     try {
-      const next = { apiRoot: normalizeApiRoot(apiRoot), token: token.trim() };
-      if (!next.token) {
-        throw new Error("API token is required.");
-      }
+      const next = connectionFromFields();
       await store.setConnection(next);
       setConnection(next);
       setMessage("Connection saved. Validating with Tempough.");
     } catch (reason) {
       setError(formatApiError(reason));
+    }
+  }
+
+  async function testConnection(): Promise<void> {
+    setBusy(true);
+    setError("");
+    setMessage("");
+    try {
+      await client.listProjects(connectionFromFields());
+      setMessage("Connection test succeeded.");
+    } catch (reason) {
+      setError(formatApiError(reason));
+    } finally {
+      setBusy(false);
     }
   }
 
@@ -246,8 +265,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
             <input type="password" value={token} onChange={(event) => setToken(event.target.value)} autoComplete="off" required />
           </label>
           <div className="button-row">
-            <button type="submit">Save connection</button>
-            {connection && <button type="button" className="button-secondary" onClick={() => void clearConnection()}>Clear connection</button>}
+            <button type="submit" disabled={busy}>Save</button>
+            <button type="button" className="button-secondary" disabled={busy} onClick={() => void testConnection()}>Test</button>
+            {connection && <button type="button" className="button-secondary" disabled={busy} onClick={() => void clearConnection()}>Clear</button>}
           </div>
         </form>
       </details>

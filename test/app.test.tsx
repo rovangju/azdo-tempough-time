@@ -69,7 +69,7 @@ describe("App", () => {
     fireEvent.click(screen.getByRole("option", { name: "Development" }));
     fireEvent.change(screen.getByRole("spinbutton", { name: "Hours" }), { target: { value: "1.5" } });
     fireEvent.change(screen.getByRole("textbox", { name: "Notes" }), { target: { value: "Reviewed rollout." } });
-    fireEvent.click(screen.getByRole("button", { name: "Create time entry" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add entry" }));
 
     await waitFor(() => expect(client.createTimeEntry).toHaveBeenCalled());
     expect(client.createTimeEntry).toHaveBeenCalledWith(

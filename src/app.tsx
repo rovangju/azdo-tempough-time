@@ -308,6 +308,8 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
       </details>
 
       <form className="entry-form" onSubmit={(event) => void submit(event)}>
+        {error && <pre className="status status-error" role="alert">{error}</pre>}
+        {message && <p className="status status-success" role="status">{message}</p>}
         <div className="field-grid">
           <SearchableSelect
             label="Project"
@@ -344,10 +346,8 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
             <pre>{notesPreview}</pre>
           </details>
         ) : null}
-        {error && <pre className="status status-error" role="alert">{error}</pre>}
-        {message && <p className="status status-success" role="status">{message}</p>}
         <button type="submit" className="submit-button" disabled={busy || !connection || workItem?.id === null}>
-          {busy ? "Working..." : "Create time entry"}
+          {busy ? "Working..." : "Add entry"}
         </button>
       </form>
     </main>

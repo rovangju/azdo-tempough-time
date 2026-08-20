@@ -26,7 +26,7 @@ This is an independent integration published by ITNobody. It is not affiliated w
 2. Open an Azure Boards work item.
 3. Expand **Log time to Tempough**.
 4. Open **Connection settings**, enter the Tempough API URL and API token, and save the connection.
-5. Choose a project and task, complete the time-entry fields, and select **Create time entry**.
+5. Choose a project and task, complete the time-entry fields, and select **Add entry**.
 
 ## Data and credentials
 

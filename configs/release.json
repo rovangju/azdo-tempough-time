@@ -1,6 +1,6 @@
 {
   "id": "tempough-time",
-  "name": "Tempough Time Tracking",
-  "publisher": "mock-publisher",
+  "name": "Time Entry for Tempough",
+  "publisher": "ITNobody",
   "public": false
 }

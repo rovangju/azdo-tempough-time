@@ -19,6 +19,7 @@ button, input, textarea { font: inherit; }
 .settings { margin-bottom: 12px; }
 .settings summary, .preview summary { cursor: pointer; padding: 10px 12px; font-weight: 650; }
 .settings summary { font-size: 13px; }
+.connection-indicator { display: inline-block; width: 8px; height: 8px; margin-left: 7px; border-radius: 50%; background: #287a45; box-shadow: 0 0 0 2px color-mix(in srgb, var(--background-color, #fffdfa) 65%, transparent); }
 .settings-grid, .entry-form { display: grid; gap: 12px; }
 .settings-grid { padding: 0 12px 12px; }
 .entry-form { padding: 14px; }
@@ -51,6 +52,14 @@ button:disabled { cursor: not-allowed; opacity: .55; }
   color: var(--text-primary-color, #202226);
   border-left: 3px solid #287a45;
   background: color-mix(in srgb, var(--background-color, #fffdfa) 88%, #287a45);
+}
+.status-flash { animation: status-flash 900ms ease-out; }
+@keyframes status-flash {
+  0%, 35% { box-shadow: 0 0 0 3px color-mix(in srgb, #287a45 55%, transparent); }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .status-flash { animation: none; }
 }
 .notice { margin: 0; color: var(--text-primary-color, #202226); }
 .dev-controls { margin-bottom: 12px; padding: 8px 10px; background: #252a30; color: #f5f5f5; font-size: 12px; }

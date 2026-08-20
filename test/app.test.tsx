@@ -33,6 +33,13 @@ function setup() {
 }
 
 describe("App", () => {
+  it("shows validated connections as a compact indicator", async () => {
+    setup();
+
+    expect(await screen.findByLabelText("Connection validated")).toBeInTheDocument();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  });
+
   it("tests connection fields without saving them", async () => {
     const { client, store } = setup();
     const testButton = await screen.findByRole("button", { name: "Test" });
@@ -42,6 +49,7 @@ describe("App", () => {
     fireEvent.click(testButton);
 
     await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Connection test succeeded"));
+    expect(screen.getByRole("status")).toHaveClass("status-flash");
     expect(client.listProjects).toHaveBeenLastCalledWith({
       apiRoot: "https://new.example.test/api/v1",
       token: "new-secret",

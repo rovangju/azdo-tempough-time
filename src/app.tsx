@@ -49,7 +49,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
   const [hours, setHours] = useState("");
   const [notes, setNotes] = useState("");
   const [busy, setBusy] = useState(false);
+  const [connectionValidated, setConnectionValidated] = useState(false);
   const [message, setMessage] = useState("");
+  const [flashMessage, setFlashMessage] = useState(false);
   const [error, setError] = useState("");
 
   const selectedTask = tasks.find((task) => task.taskId === Number(taskId));
@@ -85,6 +87,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     }
     let cancelled = false;
     setBusy(true);
+    setConnectionValidated(false);
     setError("");
     void client.listProjects(connection)
       .then((availableProjects) => {
@@ -92,7 +95,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
           return;
         }
         setProjects(availableProjects);
-        setMessage("Connection validated.");
+        setConnectionValidated(true);
         setProjectId((currentProjectId) => {
           if (!currentProjectId) {
             return currentProjectId;
@@ -107,6 +110,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
       })
       .catch((reason: unknown) => {
         if (!cancelled) {
+          setConnectionValidated(false);
           setError(formatApiError(reason));
         }
       })
@@ -168,6 +172,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     event.preventDefault();
     setError("");
     setMessage("");
+    setFlashMessage(false);
     try {
       const next = connectionFromFields();
       await store.setConnection(next);
@@ -182,10 +187,14 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setBusy(true);
     setError("");
     setMessage("");
+    setFlashMessage(false);
     try {
       await client.listProjects(connectionFromFields());
+      setConnectionValidated(true);
       setMessage("Connection test succeeded.");
+      setFlashMessage(true);
     } catch (reason) {
+      setConnectionValidated(false);
       setError(formatApiError(reason));
     } finally {
       setBusy(false);
@@ -198,7 +207,9 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     setToken("");
     setProjects([]);
     setTasks([]);
+    setConnectionValidated(false);
     setMessage("Connection cleared.");
+    setFlashMessage(false);
     setError("");
   }
 
@@ -215,6 +226,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     event.preventDefault();
     setError("");
     setMessage("");
+    setFlashMessage(false);
     const selectedProjectId = toPositiveId(projectId);
     const numericHours = Number(hours);
     if (!connection) {
@@ -254,7 +266,10 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     <main className="app-shell">
       {developmentControls}
       <details className="settings" open={!connection}>
-        <summary>Settings</summary>
+        <summary>
+          Settings
+          {connectionValidated && <span className="connection-indicator" title="Connection validated" aria-label="Connection validated" />}
+        </summary>
         <form className="settings-grid" onSubmit={(event) => void saveConnection(event)}>
           <label>
             API root
@@ -310,7 +325,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
           </details>
         ) : null}
         {error && <pre className="status status-error" role="alert">{error}</pre>}
-        {message && <p className="status status-success" role="status">{message}</p>}
+        {message && <p className={`status status-success${flashMessage ? " status-flash" : ""}`} role="status">{message}</p>}
         <button type="submit" className="submit-button" disabled={busy || !connection || workItem?.id === null}>
           {busy ? "Working..." : "Create time entry"}
         </button>

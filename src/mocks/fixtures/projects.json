@@ -1,0 +1,20 @@
+[
+  {
+    "id": 101,
+    "name": "Platform Operations",
+    "code": "PLAT",
+    "status": "active"
+  },
+  {
+    "id": 102,
+    "name": "Internal Applications",
+    "code": "APP",
+    "status": "active"
+  },
+  {
+    "id": 103,
+    "name": "Archived Example",
+    "code": "OLD",
+    "status": "archived"
+  }
+]

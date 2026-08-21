@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help setup dev dev-azdo test lint verify build package package-dev clean
+.PHONY: help setup dev dev-azdo test coverage lint verify build package package-dev clean
 
 help:
 	@printf '%s\n\n' 'Tempough Azure DevOps extension'
@@ -21,11 +21,14 @@ dev-azdo: ## Start the HTTPS Azure DevOps development host
 test: ## Run tests once
 	npm test
 
+coverage: ## Run tests and generate a coverage report
+	npm test -- --coverage
+
 lint: ## Run ESLint and TypeScript checks
 	npm run lint
 	npm run typecheck
 
-verify: lint test build ## Run lint, tests, and build
+verify: lint coverage build ## Run lint, coverage-gated tests, and build
 
 build: ## Build static extension assets
 	npm run build

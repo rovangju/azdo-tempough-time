@@ -1,8 +1,7 @@
 # Time Entry for Tempough
 
-Create Tempough time entries without leaving an Azure DevOps work item. The extension adds the Tempough project code and work item ID and title to each entry so time records retain useful delivery context.
-
-This is an independent integration published by ITNobody. It is not affiliated with, endorsed by, or sponsored by Tempough.
+Create [Tempough](https://www.tempough.com) time entries without leaving an Azure DevOps work item. The extension adds the Tempough project
+code and work item ID and title to each entry so time records retain useful delivery context.
 
 ![Time-entry form in an Azure DevOps work item](docs/preview.png)
 
@@ -17,7 +16,7 @@ This is an independent integration published by ITNobody. It is not affiliated w
 ## Requirements
 
 - Azure DevOps Services
-- A Tempough account and API token
+- A [Tempough](https://www.tempough.com) account and API token
 - Browser access from Azure DevOps to the Tempough API
 
 ## Get started
@@ -30,9 +29,14 @@ This is an independent integration published by ITNobody. It is not affiliated w
 
 ## Data and credentials
 
-The extension reads the current work item's ID, title, and type. When you create an entry, its notes include the selected Tempough project code, work item ID and title, and any notes you enter.
+The extension reads the current work item's ID, title, and type. When you create an entry, the notes include the selected Tempough project
+code, work item ID and title, and any notes you enter.
 
-Your API URL, API token, and last project and task selection are stored in Azure DevOps user-scoped Extension Data. This storage is not a dedicated secrets vault. The token is sent only to the configured Tempough API endpoint as a bearer token. The extension does not include publisher-operated analytics or telemetry.
+Your API URL, API token, and last project and task selection are stored in Azure DevOps
+[user-scoped Extension Data](https://learn.microsoft.com/en-us/azure/devops/extend/develop/data-storage?view=azure-devops#data-scoping).
+
+The token is sent only to the configured Tempough API endpoint as a bearer token. The extension does not include publisher-operated
+analytics or telemetry.
 
 See the included [privacy policy](PRIVACY.md) for details.
 
@@ -41,8 +45,8 @@ See the included [privacy policy](PRIVACY.md) for details.
 - **Work items (read):** reads context from the work item where the form is displayed.
 - **Extension data (read and write):** stores each user's connection and last selection.
 
-## Support
+## Other Remarks
 
-Public support through GitHub Issues will be available when the source repository is published. Until then, this extension is distributed privately to selected Azure DevOps organizations.
+This is an independent integration published by ITNobody. It is not affiliated with, endorsed by, or sponsored by Tempough.
 
 Tempough is a trademark of its respective owner. Use of the name identifies the service with which this independent extension interoperates.

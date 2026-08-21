@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help setup doctor dev dev-azdo test lint verify build package package-dev clean
+.PHONY: help setup dev dev-azdo test lint verify build package package-dev clean
 
 help:
 	@printf '%s\n\n' 'Tempough Azure DevOps extension'
@@ -11,11 +11,6 @@ help:
 
 setup: ## Install locked npm dependencies
 	npm ci
-
-doctor: ## Check the local toolchain
-	@node -e 'const major=Number(process.versions.node.split(".")[0]); if (major !== 24) { console.error(`Node 24 required; found $${process.versions.node}`); process.exit(1); } console.log(`Node $${process.versions.node}`)'
-	@npm --version
-	@node -e 'require("fs").accessSync("node_modules/.bin/vite")' || (printf '%s\n' 'Dependencies missing. Run make setup.' && exit 1)
 
 dev: ## Start the HTTP mock development host
 	npm run dev -- --open '/'

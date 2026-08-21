@@ -1,13 +1,13 @@
 # Contributing
 
-The Makefile is the entry point for setup, local development, verification, and packaging.
+Thanks for contributing to Tempough Time Tracking.
 
-Daily development uses the standalone HTTP mock host. Azure DevOps integration uses the same application through a thin host adapter and an
-HTTPS development server. The development VSIX must be privately installed once before using that integration loop. Run the verification
-workflow before packaging.
+See the [README](README.md) for setup, development, and verification instructions.
 
-Real API development uses the Vite proxy to avoid browser CORS. Copy `.env.example` to ignored `.env.local` and set the API root, then use
-either `/?api=real` in the standalone host or `make dev-azdo`. Do not place tokens in environment files. The connection `Test` will always
-succeed through this proxy and does not verify direct browser access to the configured API root.
+Before opening a pull request:
 
-Publishing is intentionally deferred. Packaging produces VSIX artifacts for later upload or automation.
+- Keep changes focused and consistent with the project's [architecture decisions](docs/adr/).
+- Add or update tests when behavior changes.
+- Update documentation when requirements or workflows change.
+- Run `make verify`.
+- Do not include credentials, tokens, or unsanitized production data.

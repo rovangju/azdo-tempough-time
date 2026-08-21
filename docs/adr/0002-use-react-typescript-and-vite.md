@@ -12,7 +12,7 @@ The extension needs a lightweight UI, fast local iteration, static production as
 
 ## Decision
 
-Use React, TypeScript, Vite, npm, Vitest, MSW, and plain CSS. Use Node 24 LTS.
+Use React, TypeScript, Vite, npm, Vitest, MSW, and plain CSS.
 
 ## Consequences
 

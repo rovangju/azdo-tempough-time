@@ -2,7 +2,11 @@
 
 An Azure DevOps extension for creating enriched [Tempough](https://tempough.com/) time entries from a work item.
 
-See the [Marketplace overview](OVERVIEW.md) for details.
+> See the [Azure DevOps Marketplace Overview](OVERVIEW.md) for more details.
+
+![GitHub License](https://img.shields.io/github/license/rovangju/azdo-tempough-time)
+
+---
 
 ## Development
 
@@ -44,6 +48,8 @@ and deploying a release.
 
 Run `make verify` before submitting changes. It runs linting, type checking, tests, and ensures proper build.
 
+---
+
 ## Engineering Principles
 
 - Keep changes minimal and intentional.
@@ -51,7 +57,10 @@ Run `make verify` before submitting changes. It runs linting, type checking, tes
 - Add abstractions only when they solve a current need.
 - Treat Azure DevOps deployment as integration verification, not the normal development loop.
 
-Architecture decisions are documented in [`docs/adr`](docs/adr/).
+> [!NOTE]
+> Architecture decisions are documented in [`docs/adr`](docs/adr/).
+
+---
 
 ## AI-assisted Development
 

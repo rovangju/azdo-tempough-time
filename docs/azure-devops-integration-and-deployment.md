@@ -42,7 +42,9 @@ saved in extension settings is used when the packaged release runs without the d
 Run `make package` to verify the project, build the static extension assets, and create `artifacts/tempough-time.vsix`. Unlike the development
 package, the release VSIX contains the built application and does not depend on the local development server.
 
-Increment `version` in `vss-extension.json` before every Marketplace update.
+Before every Marketplace update, set `version` in `vss-extension.json` according to [Semantic
+Versioning](https://semver.org/spec/v2.0.0.html). This is the authoritative extension version; see the [architecture
+decision](adr/0008-use-semantic-versioning.md).
 
 ## Deploy a private release
 

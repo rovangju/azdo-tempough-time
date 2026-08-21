@@ -29,6 +29,14 @@
       "path": "LICENSE"
     }
   },
+  "links": {
+    "repository": {
+      "uri": "https://github.com/rovangju/azdo-tempough-time"
+    },
+    "support": {
+      "uri": "https://github.com/rovangju/azdo-tempough-time/issues"
+    }
+  },
   "contributions": [
     {
       "id": "tempough-work-item-form-group",

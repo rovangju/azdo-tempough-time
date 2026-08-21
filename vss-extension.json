@@ -4,7 +4,7 @@
   "version": "0.1.3",
   "name": "Time Entry for Tempough",
   "publisher": "ITNobody",
-  "description": "Create Tempough time entries from Azure DevOps work items with linked context and reusable project and task selections.",
+  "description": "Easily create Tempough time entries from Azure DevOps work items",
   "public": false,
   "targets": [
     {
@@ -27,6 +27,14 @@
     },
     "license": {
       "path": "LICENSE"
+    }
+  },
+  "links": {
+    "repository": {
+      "uri": "https://github.com/rovangju/azdo-tempough-time"
+    },
+    "support": {
+      "uri": "https://github.com/rovangju/azdo-tempough-time/issues"
     }
   },
   "contributions": [

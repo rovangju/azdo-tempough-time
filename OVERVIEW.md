@@ -1,9 +1,7 @@
 # Time Entry for Tempough
 
-Create [Tempough](https://www.tempough.com) time entries without leaving an Azure DevOps work item.
-
-This extension adds the Azure DevOps work item's project code, work item # and title to each entry, so entries retain useful delivery
-context over in Tempough.
+Create [Tempough](https://www.tempough.com) time entries from an Azure DevOps work item. Each entry includes the Azure DevOps project code,
+work item number, and title.
 
 ![Time-entry form in an Azure DevOps work item](docs/preview.png)
 
@@ -11,19 +9,16 @@ context over in Tempough.
 
 ## Features
 
-- Easily create time entries from an Azure DevOps work item.
-- Select active Tempough projects and their tasks.
-- Remembers the last project and task selection for each user.
-- Preview the time entry note before submit.
+Create entries using active Tempough projects and tasks, reuse your last selections, and preview notes before submitting.
 
 ## Requirements
 
 - A [Tempough](https://www.tempough.com) account and API URL and token.
-- Permission to install extension to your Azure DevOps project.
+- Permission to install the extension in your Azure DevOps organization.
 
 ## Get started
 
-1. Install the extension in your Azure DevOps organization project.
+1. Install the extension in your Azure DevOps organization.
 2. Open an Azure Boards work item.
 3. Expand **Log time to Tempough**.
 4. Open **Settings**, enter the Tempough API URL and API token, and save the connection.
@@ -38,7 +33,8 @@ The extension reads the current work item's ID, title, and type from Azure DevOp
 Your Tempough API URL, API token, and last project and task selection are stored in Azure DevOps
 [user-scoped Extension Data](https://learn.microsoft.com/en-us/azure/devops/extend/develop/data-storage?view=azure-devops#data-scoping).
 
-The API token is sent only to the configured Tempough API endpoint as a bearer token from your browser, not Azure DevOps servers.
+The API token is stored in Azure DevOps user-scoped Extension Data. API requests send it from your browser to the configured Tempough endpoint
+as a bearer token.
 
 The extension does not include publisher-operated analytics, logging or telemetry.
 

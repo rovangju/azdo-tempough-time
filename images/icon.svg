@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="Time entry">
-  <rect width="128" height="128" rx="24" fill="#17324d"/>
+  <rect width="128" height="128" rx="24" fill="#0d3b2e"/>
   <circle cx="64" cy="64" r="38" fill="none" stroke="#e8f1f5" stroke-width="8"/>
   <path d="M64 42v24l17 11" fill="none" stroke="#e8f1f5" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M91 30l7 7" fill="none" stroke="#42c6a5" stroke-width="8" stroke-linecap="round"/>
-  <path d="M64 19v9" fill="none" stroke="#42c6a5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M91 30l7 7" fill="none" stroke="#e8f1f5" stroke-width="8" stroke-linecap="round"/>
+  <path d="M64 19v9" fill="none" stroke="#e8f1f5" stroke-width="8" stroke-linecap="round"/>
 </svg>

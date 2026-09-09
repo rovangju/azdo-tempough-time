@@ -17,7 +17,7 @@
     "default": "images/icon.png"
   },
   "branding": {
-    "color": "#17324d",
+    "color": "#0d3b2e",
     "theme": "dark"
   },
   "scopes": ["vso.work", "vso.extension.data_write"],

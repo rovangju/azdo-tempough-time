@@ -254,7 +254,7 @@ export function App({ host, store, client, developmentControls, initialApiRoot =
     if (selectedProjectId === null || !selectedProject || !selectedTask) {
       return setError("Select a project and task.");
     }
-    if (!/^\d+(?:\.\d{1,2})?$/.test(hours) || numericHours <= 0 || numericHours > 24) {
+    if (!/^(?:\d+)?(?:\.\d{1,2})?$/.test(hours) || numericHours <= 0 || numericHours > 24) {
       return setError("Hours must be greater than zero, at most 24, and use no more than two decimal places.");
     }
     setBusy(true);

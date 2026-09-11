@@ -26,6 +26,6 @@ run_test() {
   [[ "$actual" == "$expected" ]]
 }
 
-run_test 'v0.1.5.9999' false false 'release create v0.1.5.9999 artifacts/tempough-time.vsix --generate-notes '
-run_test 'v0.1.5.8001' true false 'release create v0.1.5.8001 artifacts/tempough-time.vsix --generate-notes --prerelease '
+run_test 'v0.1.5.9999' false false 'release create v0.1.5.9999 artifacts/tempough-time.vsix --draft --generate-notes '
+run_test 'v0.1.5.8001' true false 'release create v0.1.5.8001 artifacts/tempough-time.vsix --draft --generate-notes --prerelease '
 run_test 'v0.1.5.8001' true true 'release upload v0.1.5.8001 artifacts/tempough-time.vsix --clobber '

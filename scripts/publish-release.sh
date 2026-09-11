@@ -24,9 +24,9 @@ if "$gh_bin" release view "$tag" >/dev/null 2>&1; then
 fi
 
 if [[ $prerelease == true ]]; then
-  # The version classifier marks development, beta, and RC releases as prereleases.
-  "$gh_bin" release create "$tag" "$artifact_path" --generate-notes --prerelease
+  # Create a draft so maintainers can review generated notes before publishing.
+  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes --prerelease
 else
-  # The version classifier reserves final releases for normal GitHub Releases.
-  "$gh_bin" release create "$tag" "$artifact_path" --generate-notes
+  # Final releases are also drafted to prevent automatic publication.
+  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes
 fi

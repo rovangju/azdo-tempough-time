@@ -53,7 +53,7 @@ Every supported package uses its four-component version tag as the Azure DevOps 
 | Tag | Artifact | Deployment version |
 | --- | --- | --- |
 | `v0.1.5.1000` | `tempough-time-dev.vsix` | `0.1.5.1000` |
-| `v0.1.5.1000` | `tempough-time.vsix` | `0.1.5.1000` |
+| `v0.1.5.5000` | `tempough-time.vsix` | `0.1.5.5000` |
 | `v0.1.5.8000` | `tempough-time.vsix` | `0.1.5.8000` |
 | `v0.1.5.9999` | `tempough-time.vsix` | `0.1.5.9999` |
 
@@ -66,8 +66,9 @@ make package VERSION=v0.1.5.8001
 The package command does not start a local server. `make dev-azdo` is required only to use the installed development extension because that
 extension loads its assets from `https://localhost:5173`.
 
-Pushing a `v*` tag runs the package workflow, creates a GitHub Release, and attaches the generated VSIX as a durable release asset. The
-transient GitHub Actions artifact is retained for 7 days. The workflow does not publish to the Marketplace.
+Pushing a `v*` tag runs the package workflow, creates a draft GitHub Release with generated notes, and attaches the generated VSIX as a
+durable release asset. Review and publish the draft release in GitHub when ready. The transient GitHub Actions artifact is retained for 7
+days. The workflow does not publish to the Marketplace.
 
 ## Deploy a private release
 

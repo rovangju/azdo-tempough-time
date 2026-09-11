@@ -4,7 +4,8 @@ An Azure DevOps extension for creating enriched [Tempough](https://tempough.com/
 
 > See the [Azure DevOps Marketplace Overview](OVERVIEW.md) for more details.
 
-![GitHub License](https://img.shields.io/github/license/rovangju/azdo-tempough-time)
+[![GitHub License](https://img.shields.io/github/license/rovangju/azdo-tempough-time)](LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/rovangju/azdo-tempough-time)](https://github.com/rovangju/azdo-tempough-time/releases/latest)
 
 ---
 

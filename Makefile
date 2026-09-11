@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help setup dev dev-azdo test coverage lint verify build package package-dev clean
+.PHONY: help setup dev dev-azdo test coverage lint verify build package require-version clean
 
 help:
 	@printf '%s\n\n' 'Tempough Azure DevOps extension'
@@ -33,13 +33,11 @@ verify: lint coverage build ## Run lint, coverage-gated tests, and build
 build: ## Build static extension assets
 	npm run build
 
-package: verify ## Create the private release VSIX
-	@mkdir -p artifacts
-	npx tfx-cli extension create --manifest-globs vss-extension.json --overrides-file configs/release.json --output-path artifacts/tempough-time.vsix
+package: require-version verify ## Create a tagged development or release VSIX (VERSION=vX.Y.Z[-dev.N|-beta.N|-rc.N])
+	node scripts/package.mjs "$(VERSION)"
 
-package-dev: verify ## Create the localhost-backed development VSIX
-	@mkdir -p artifacts
-	npx tfx-cli extension create --manifest-globs vss-extension.json --overrides-file configs/dev.json --output-path artifacts/tempough-time-dev.vsix
+require-version:
+	@test -n "$(VERSION)" || (printf '%s\n' 'VERSION is required, for example: make package VERSION=v0.1.5-rc.1' >&2; exit 1)
 
 clean: ## Remove generated output
 	rm -rf dist coverage artifacts

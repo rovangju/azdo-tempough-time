@@ -1,0 +1,43 @@
+name: Package extension
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: Package ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: make setup
+      - run: make package VERSION="${{ github.ref_name }}"
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          prerelease=()
+          case "$TAG" in
+            *-dev.*|*-beta.*|*-rc.*) prerelease=(--prerelease) ;;
+          esac
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/*.vsix --clobber
+          else
+            gh release create "$TAG" artifacts/*.vsix --generate-notes "${prerelease[@]}"
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tempough-time-${{ github.ref_name }}
+          path: artifacts/*.vsix
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7

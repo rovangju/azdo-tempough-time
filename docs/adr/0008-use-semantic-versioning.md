@@ -4,7 +4,7 @@ Date: 2026-08-20
 
 ## Status
 
-Superseded by [ADR 0010](0010-use-tagged-release-identifiers-and-numeric-deployment-versions.md)
+Superseded by [ADR 0010](0010-versioned-artifacts.md)
 
 ## Context
 

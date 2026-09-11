@@ -44,7 +44,7 @@ Run `make package VERSION=v0.1.5` to verify the project, build the static extens
 local development server.
 
 Use a release tag to select every packaged version. The package command derives a four-component Azure DevOps deployment version; see the
-[versioning architecture decision](adr/0010-use-tagged-release-identifiers-and-numeric-deployment-versions.md).
+[versioning architecture decision](adr/0010-versioned-artifacts.md).
 
 ## Package artifacts
 

@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := help
 
-.PHONY: help setup dev dev-azdo test coverage lint verify build package require-version clean
+.PHONY: help setup dev dev-azdo test coverage lint verify test-release-script build package require-version clean
 
 help:
 	@printf '%s\n\n' 'Tempough Azure DevOps extension'
@@ -29,6 +29,9 @@ lint: ## Run ESLint and TypeScript checks
 	npm run typecheck
 
 verify: lint coverage build ## Run lint, coverage-gated tests, and build
+
+test-release-script: ## Test GitHub Release asset publishing behavior
+	bash test/publish-release.test.sh
 
 build: ## Build static extension assets
 	npm run build

@@ -19,7 +19,7 @@ guide](https://learn.microsoft.com/en-us/azure/devops/extend/publish/overview?vi
 1. Create or verify the `ITNobody` publisher in the [Visual Studio Marketplace publishing
    portal](https://marketplace.visualstudio.com/manage/createpublisher?managePageRedirect=true).
 2. Copy `.env.example` to `.env.local` and set `VITE_TEMPOUGH_API_ROOT` to the real API root.
-3. Run `make package-dev` to create `artifacts/tempough-time-dev.vsix`.
+3. Run `make package VERSION=v0.1.5.1000` to create `artifacts/tempough-time-dev.vsix`.
 4. Upload the VSIX as a private Azure DevOps extension in the Marketplace.
 5. Share it with the test Azure DevOps organization and install it in that organization.
 6. Run `make dev-azdo`.
@@ -32,25 +32,49 @@ if the browser requests permission.
 ### Development loop
 
 The development manifest points Azure DevOps to the local server. Ordinary source changes require only a browser refresh. Manifest changes
-require incrementing `version` in `vss-extension.json`, rebuilding the development VSIX, and updating it in the Marketplace.
+require a new development tag, a rebuilt development VSIX, and an update in the Marketplace.
 
 API requests use the Vite proxy during local integration testing. `VITE_TEMPOUGH_API_ROOT` determines the proxy destination. The API root
 saved in extension settings is used when the packaged release runs without the development proxy.
 
 ## Build a release
 
-Run `make package` to verify the project, build the static extension assets, and create `artifacts/tempough-time.vsix`. Unlike the development
-package, the release VSIX contains the built application and does not depend on the local development server.
+Run `make package VERSION=v0.1.5.9999` to verify the project, build the static extension assets, and create
+`artifacts/tempough-time.vsix`. Unlike the development package, the release VSIX contains the built application and does not depend on the
+local development server.
 
-Before every Marketplace update, set `version` in `vss-extension.json` according to [Semantic
-Versioning](https://semver.org/spec/v2.0.0.html). This is the authoritative extension version; see the [architecture
-decision](adr/0008-use-semantic-versioning.md).
+Use a four-component release tag to select every packaged version. The package command applies that exact Azure DevOps deployment version; see the
+[versioning architecture decision](adr/0010-versioned-artifacts.md).
+
+## Package artifacts
+
+Every supported package uses its four-component version tag as the Azure DevOps deployment version:
+
+| Tag | Artifact | Deployment version |
+| --- | --- | --- |
+| `v0.1.5.1000` | `tempough-time-dev.vsix` | `0.1.5.1000` |
+| `v0.1.5.5000` | `tempough-time.vsix` | `0.1.5.5000` |
+| `v0.1.5.8000` | `tempough-time.vsix` | `0.1.5.8000` |
+| `v0.1.5.9999` | `tempough-time.vsix` | `0.1.5.9999` |
+
+Run the same command locally that GitHub Actions runs for a pushed version tag:
+
+```sh
+make package VERSION=v0.1.5.8001
+```
+
+The package command does not start a local server. `make dev-azdo` is required only to use the installed development extension because that
+extension loads its assets from `https://localhost:5173`.
+
+Pushing a `v*` tag runs the package workflow, creates a draft GitHub Release with generated notes, and attaches the generated VSIX as a
+durable release asset. Review and publish the draft release in GitHub when ready. The transient GitHub Actions artifact is retained for 7
+days. The workflow does not publish to the Marketplace.
 
 ## Deploy a private release
 
 1. Complete the publisher profile and accept the Marketplace Publisher Agreement.
 2. Confirm that ITNobody has permission to distribute every packaged image and dependency.
-3. Run `make package`.
+3. Run `make package VERSION=v0.1.5.9999`.
 4. Upload `artifacts/tempough-time.vsix` through the Marketplace publisher portal.
 5. Keep the extension private and share it only with selected Azure DevOps organizations.
 6. Install and test the release in a shared organization.

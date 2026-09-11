@@ -47,7 +47,7 @@ and deploying a release.
 ### Verification
 
 Run `make verify` before submitting changes. It runs linting, type checking, tests, and ensures proper build. To create a VSIX, run
-`make package VERSION=vX.Y.Z[-dev.N|-beta.N|-rc.N]`.
+`make package VERSION=vX.Y.Z.R`.
 
 ---
 

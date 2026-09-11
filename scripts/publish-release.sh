@@ -2,8 +2,20 @@
 
 set -euo pipefail
 
-tag=${1:?usage: scripts/publish-release.sh vX.Y.Z[-dev.N|-beta.N|-rc.N]}
+tag=${1:?usage: scripts/publish-release.sh vX.Y.Z.REVISION}
 gh_bin=${GH_BIN:-gh}
+
+if [[ ! $tag =~ ^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.([1-9][0-9]*)$ ]]; then
+  printf 'tag must be vMAJOR.MINOR.PATCH.REVISION\n' >&2
+  exit 1
+fi
+
+revision=${BASH_REMATCH[4]}
+
+if (( revision > 9999 )); then
+  printf 'revision must be between 1 and 9999\n' >&2
+  exit 1
+fi
 
 shopt -s nullglob
 assets=(artifacts/*.vsix)
@@ -19,13 +31,10 @@ if "$gh_bin" release view "$tag" >/dev/null 2>&1; then
   exit 0
 fi
 
-case "$tag" in
-  *-dev.*|*-beta.*|*-rc.*)
-    # Mark non-final tag channels as prereleases in GitHub.
-    "$gh_bin" release create "$tag" "${assets[0]}" --generate-notes --prerelease
-    ;;
-  *)
-    # Stable tags create normal releases so users can find their VSIX easily.
-    "$gh_bin" release create "$tag" "${assets[0]}" --generate-notes
-    ;;
-esac
+if (( revision < 9999 )); then
+  # Mark development, beta, and release-candidate bands as GitHub prereleases.
+  "$gh_bin" release create "$tag" "${assets[0]}" --generate-notes --prerelease
+else
+  # The final-release band creates a normal release for users to download.
+  "$gh_bin" release create "$tag" "${assets[0]}" --generate-notes
+fi

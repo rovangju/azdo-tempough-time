@@ -36,11 +36,11 @@ test-release-script: ## Test GitHub Release asset publishing behavior
 build: ## Build static extension assets
 	npm run build
 
-package: require-version verify ## Create a tagged development or release VSIX (VERSION=vX.Y.Z[-dev.N|-beta.N|-rc.N])
+package: require-version verify ## Create a tagged development or release VSIX (VERSION=vX.Y.Z.REVISION)
 	node scripts/package.mjs "$(VERSION)"
 
 require-version:
-	@test -n "$(VERSION)" || (printf '%s\n' 'VERSION is required, for example: make package VERSION=v0.1.5-rc.1' >&2; exit 1)
+	@test -n "$(VERSION)" || (printf '%s\n' 'VERSION is required, for example: make package VERSION=v0.1.5.5001' >&2; exit 1)
 
 clean: ## Remove generated output
 	rm -rf dist coverage artifacts

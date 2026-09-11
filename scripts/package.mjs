@@ -1,56 +1,50 @@
 import { mkdirSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 
-const TAG_PATTERN = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(dev|beta|rc)\.(0|[1-9]\d*))?$/;
+const TAG_PATTERN = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)\.([1-9]\d*)$/;
 
 export function derivePackage(tag) {
   const match = TAG_PATTERN.exec(tag);
 
   if (!match) {
     throw new Error(
-      'VERSION must be vMAJOR.MINOR.PATCH or vMAJOR.MINOR.PATCH-(dev|beta|rc).N.',
+      'VERSION must be vMAJOR.MINOR.PATCH.REVISION.',
     );
   }
 
-  const [, major, minor, patch, channel = 'release', sequence] = match;
-  const coreVersion = `${major}.${minor}.${patch}`;
-  let revision;
+  const [, major, minor, patch, revisionText] = match;
+  const revision = Number(revisionText);
+  const deploymentVersion = `${major}.${minor}.${patch}.${revision}`;
+  let channel;
   let artifactPath;
   let overridesFile;
 
-  if (channel === 'dev') {
-    validateSequence(channel, sequence, 999);
-    revision = Number(sequence);
+  if (revision <= 999) {
+    channel = 'dev';
     artifactPath = 'artifacts/tempough-time-dev.vsix';
     overridesFile = 'configs/dev.json';
-  } else if (channel === 'beta') {
-    validateSequence(channel, sequence, 3999);
-    revision = 1000 + Number(sequence);
+  } else if (revision <= 4999) {
+    channel = 'beta';
     artifactPath = 'artifacts/tempough-time.vsix';
     overridesFile = 'configs/release.json';
-  } else if (channel === 'rc') {
-    validateSequence(channel, sequence, 4998);
-    revision = 5000 + Number(sequence);
+  } else if (revision <= 9998) {
+    channel = 'rc';
+    artifactPath = 'artifacts/tempough-time.vsix';
+    overridesFile = 'configs/release.json';
+  } else if (revision === 9999) {
+    channel = 'release';
     artifactPath = 'artifacts/tempough-time.vsix';
     overridesFile = 'configs/release.json';
   } else {
-    revision = 9999;
-    artifactPath = 'artifacts/tempough-time.vsix';
-    overridesFile = 'configs/release.json';
+    throw new Error('REVISION must be between 1 and 9999.');
   }
 
   return {
     artifactPath,
     channel,
-    deploymentVersion: `${coreVersion}.${revision}`,
+    deploymentVersion,
     overridesFile,
   };
-}
-
-function validateSequence(channel, sequence, maximum) {
-  if (Number(sequence) < 1 || Number(sequence) > maximum) {
-    throw new Error(`${channel} sequence must be between 1 and ${maximum}.`);
-  }
 }
 
 export function packageExtension(tag) {
@@ -87,7 +81,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const tag = process.argv[2];
 
   if (!tag) {
-    throw new Error('VERSION is required, for example: make package VERSION=v0.1.5-rc.1');
+    throw new Error('VERSION is required, for example: make package VERSION=v0.1.5.5001');
   }
 
   packageExtension(tag);

@@ -19,15 +19,15 @@ export function derivePackage(tag) {
   let artifactPath;
   let overridesFile;
 
-  if (revision <= 999) {
+  if (revision >= 1000 && revision <= 1999) {
     channel = 'dev';
     artifactPath = 'artifacts/tempough-time-dev.vsix';
     overridesFile = 'configs/dev.json';
-  } else if (revision <= 4999) {
+  } else if (revision >= 5000 && revision <= 5999) {
     channel = 'beta';
     artifactPath = 'artifacts/tempough-time.vsix';
     overridesFile = 'configs/release.json';
-  } else if (revision <= 9998) {
+  } else if (revision >= 8000 && revision <= 8999) {
     channel = 'rc';
     artifactPath = 'artifacts/tempough-time.vsix';
     overridesFile = 'configs/release.json';
@@ -36,7 +36,7 @@ export function derivePackage(tag) {
     artifactPath = 'artifacts/tempough-time.vsix';
     overridesFile = 'configs/release.json';
   } else {
-    throw new Error('REVISION must be between 1 and 9999.');
+    throw new Error('REVISION must be 1000-1999, 5000-5999, 8000-8999, or 9999.');
   }
 
   return {

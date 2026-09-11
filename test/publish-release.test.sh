@@ -26,5 +26,5 @@ run_test() {
 }
 
 run_test 'v0.1.5.9999' false 'release create v0.1.5.9999 artifacts/tempough-time.vsix --generate-notes '
-run_test 'v0.1.5.5001' false 'release create v0.1.5.5001 artifacts/tempough-time.vsix --generate-notes --prerelease '
-run_test 'v0.1.5.5001' true 'release upload v0.1.5.5001 artifacts/tempough-time.vsix --clobber '
+run_test 'v0.1.5.8001' false 'release create v0.1.5.8001 artifacts/tempough-time.vsix --generate-notes --prerelease '
+run_test 'v0.1.5.8001' true 'release upload v0.1.5.8001 artifacts/tempough-time.vsix --clobber '

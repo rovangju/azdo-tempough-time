@@ -19,7 +19,7 @@ guide](https://learn.microsoft.com/en-us/azure/devops/extend/publish/overview?vi
 1. Create or verify the `ITNobody` publisher in the [Visual Studio Marketplace publishing
    portal](https://marketplace.visualstudio.com/manage/createpublisher?managePageRedirect=true).
 2. Copy `.env.example` to `.env.local` and set `VITE_TEMPOUGH_API_ROOT` to the real API root.
-3. Run `make package VERSION=v0.1.5.1` to create `artifacts/tempough-time-dev.vsix`.
+3. Run `make package VERSION=v0.1.5.1000` to create `artifacts/tempough-time-dev.vsix`.
 4. Upload the VSIX as a private Azure DevOps extension in the Marketplace.
 5. Share it with the test Azure DevOps organization and install it in that organization.
 6. Run `make dev-azdo`.
@@ -52,15 +52,15 @@ Every supported package uses its four-component version tag as the Azure DevOps 
 
 | Tag | Artifact | Deployment version |
 | --- | --- | --- |
-| `v0.1.5.1` | `tempough-time-dev.vsix` | `0.1.5.1` |
+| `v0.1.5.1000` | `tempough-time-dev.vsix` | `0.1.5.1000` |
 | `v0.1.5.1000` | `tempough-time.vsix` | `0.1.5.1000` |
-| `v0.1.5.5000` | `tempough-time.vsix` | `0.1.5.5000` |
+| `v0.1.5.8000` | `tempough-time.vsix` | `0.1.5.8000` |
 | `v0.1.5.9999` | `tempough-time.vsix` | `0.1.5.9999` |
 
 Run the same command locally that GitHub Actions runs for a pushed version tag:
 
 ```sh
-make package VERSION=v0.1.5.5001
+make package VERSION=v0.1.5.8001
 ```
 
 The package command does not start a local server. `make dev-azdo` is required only to use the installed development extension because that

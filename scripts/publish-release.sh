@@ -12,8 +12,8 @@ fi
 
 revision=${BASH_REMATCH[4]}
 
-if (( revision > 9999 )); then
-  printf 'revision must be between 1 and 9999\n' >&2
+if ! (( (revision >= 1000 && revision <= 1999) || (revision >= 5000 && revision <= 5999) || (revision >= 8000 && revision <= 8999) || revision == 9999 )); then
+  printf 'revision must be 1000-1999, 5000-5999, 8000-8999, or 9999\n' >&2
   exit 1
 fi
 

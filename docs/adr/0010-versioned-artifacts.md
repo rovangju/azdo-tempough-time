@@ -26,9 +26,9 @@ Every package uses the tag version directly after removing its leading `v`. The 
 
 | Tag | Extension identity | Deployment version |
 | --- | --- | --- |
-| `vX.Y.Z.1` through `vX.Y.Z.999` | `ITNobody.tempough-time-dev` | `X.Y.Z.1` through `X.Y.Z.999` (development) |
-| `vX.Y.Z.1000` through `vX.Y.Z.4999` | `ITNobody.tempough-time` | `X.Y.Z.1000` through `X.Y.Z.4999` (beta) |
-| `vX.Y.Z.5000` through `vX.Y.Z.9998` | `ITNobody.tempough-time` | `X.Y.Z.5000` through `X.Y.Z.9998` (release candidate) |
+| `vX.Y.Z.1000` through `vX.Y.Z.1999` | `ITNobody.tempough-time-dev` | `X.Y.Z.1000` through `X.Y.Z.1999` (development) |
+| `vX.Y.Z.5000` through `vX.Y.Z.5999` | `ITNobody.tempough-time` | `X.Y.Z.5000` through `X.Y.Z.5999` (beta) |
+| `vX.Y.Z.8000` through `vX.Y.Z.8999` | `ITNobody.tempough-time` | `X.Y.Z.8000` through `X.Y.Z.8999` (release candidate) |
 | `vX.Y.Z.9999` | `ITNobody.tempough-time` | `X.Y.Z.9999` (final) |
 
 The committed `vss-extension.json` has the required `0.0.0.1` placeholder version. It is not a release version. The supported package
@@ -45,7 +45,7 @@ direct TFX packaging without its tag-derived override is unsupported.
 The numeric bands preserve ordering for the release extension identity:
 
 ```text
-X.Y.Z.1001 < X.Y.Z.5001 < X.Y.Z.9999 < X.Y.(Z + 1).1001
+X.Y.Z.1000 < X.Y.Z.5000 < X.Y.Z.8000 < X.Y.Z.9999 < X.Y.(Z + 1).1000
 ```
 
 Create the final tag only after beta and release-candidate iteration for that release core is complete. Once `X.Y.Z.9999` is published,

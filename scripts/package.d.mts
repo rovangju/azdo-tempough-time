@@ -3,7 +3,9 @@ export interface PackageDetails {
   channel: 'dev' | 'beta' | 'rc' | 'release';
   deploymentVersion: string;
   overridesFile: string;
+  prerelease: boolean;
+  revision: number;
+  tag: string;
 }
 
-export function derivePackage(tag: string): PackageDetails;
 export function packageExtension(tag: string): void;

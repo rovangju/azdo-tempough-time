@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { derivePackage } from '../scripts/package.mjs';
+import { classifyVersionTag } from '../scripts/version.mjs';
 
-describe('derivePackage', () => {
+describe('classifyVersionTag', () => {
   it.each([
     ['v0.1.5.1000', 'dev', '0.1.5.1000', 'configs/dev.json', 'artifacts/tempough-time-dev.vsix'],
     ['v0.1.5.1999', 'dev', '0.1.5.1999', 'configs/dev.json', 'artifacts/tempough-time-dev.vsix'],
@@ -11,7 +11,14 @@ describe('derivePackage', () => {
     ['v0.1.5.8999', 'rc', '0.1.5.8999', 'configs/release.json', 'artifacts/tempough-time.vsix'],
     ['v0.1.5.9999', 'release', '0.1.5.9999', 'configs/release.json', 'artifacts/tempough-time.vsix'],
   ])('maps %s to its Azure DevOps deployment version', (tag, channel, deploymentVersion, overridesFile, artifactPath) => {
-    expect(derivePackage(tag)).toEqual({ artifactPath, channel, deploymentVersion, overridesFile });
+    expect(classifyVersionTag(tag)).toMatchObject({
+      artifactPath,
+      channel,
+      deploymentVersion,
+      overridesFile,
+      prerelease: channel !== 'release',
+      tag,
+    });
   });
 
   it.each([
@@ -26,6 +33,6 @@ describe('derivePackage', () => {
     'v0.1.5.01',
     'v0.1.5-rc.1',
   ])('rejects unsupported tag %s', (tag) => {
-    expect(() => derivePackage(tag)).toThrow();
+    expect(() => classifyVersionTag(tag)).toThrow();
   });
 });

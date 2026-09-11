@@ -1,54 +1,9 @@
-import { mkdirSync, rmSync } from 'node:fs';
+import { appendFileSync, mkdirSync, rmSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-
-const TAG_PATTERN = /^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)\.([1-9]\d*)$/;
-
-export function derivePackage(tag) {
-  const match = TAG_PATTERN.exec(tag);
-
-  if (!match) {
-    throw new Error(
-      'VERSION must be vMAJOR.MINOR.PATCH.REVISION.',
-    );
-  }
-
-  const [, major, minor, patch, revisionText] = match;
-  const revision = Number(revisionText);
-  const deploymentVersion = `${major}.${minor}.${patch}.${revision}`;
-  let channel;
-  let artifactPath;
-  let overridesFile;
-
-  if (revision >= 1000 && revision <= 1999) {
-    channel = 'dev';
-    artifactPath = 'artifacts/tempough-time-dev.vsix';
-    overridesFile = 'configs/dev.json';
-  } else if (revision >= 5000 && revision <= 5999) {
-    channel = 'beta';
-    artifactPath = 'artifacts/tempough-time.vsix';
-    overridesFile = 'configs/release.json';
-  } else if (revision >= 8000 && revision <= 8999) {
-    channel = 'rc';
-    artifactPath = 'artifacts/tempough-time.vsix';
-    overridesFile = 'configs/release.json';
-  } else if (revision === 9999) {
-    channel = 'release';
-    artifactPath = 'artifacts/tempough-time.vsix';
-    overridesFile = 'configs/release.json';
-  } else {
-    throw new Error('REVISION must be 1000-1999, 5000-5999, 8000-8999, or 9999.');
-  }
-
-  return {
-    artifactPath,
-    channel,
-    deploymentVersion,
-    overridesFile,
-  };
-}
+import { classifyVersionTag } from './version.mjs';
 
 export function packageExtension(tag) {
-  const packageDetails = derivePackage(tag);
+  const packageDetails = classifyVersionTag(tag);
 
   rmSync('artifacts', { force: true, recursive: true });
   mkdirSync('artifacts', { recursive: true });
@@ -71,10 +26,30 @@ export function packageExtension(tag) {
     { stdio: 'inherit' },
   );
 
+  writeGithubOutputs(packageDetails);
+
   console.log(`Tag: ${tag}`);
   console.log(`Channel: ${packageDetails.channel}`);
   console.log(`Deployment version: ${packageDetails.deploymentVersion}`);
   console.log(`Artifact: ${packageDetails.artifactPath}`);
+}
+
+function writeGithubOutputs(packageDetails) {
+  if (!process.env.GITHUB_OUTPUT) {
+    return;
+  }
+
+  appendFileSync(
+    process.env.GITHUB_OUTPUT,
+    [
+      `tag=${packageDetails.tag}`,
+      `channel=${packageDetails.channel}`,
+      `prerelease=${packageDetails.prerelease}`,
+      `deployment_version=${packageDetails.deploymentVersion}`,
+      `artifact_path=${packageDetails.artifactPath}`,
+      '',
+    ].join('\n'),
+  );
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

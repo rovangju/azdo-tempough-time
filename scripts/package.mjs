@@ -19,7 +19,10 @@ export function packageExtension(tag) {
       '--overrides-file',
       packageDetails.overridesFile,
       '--override',
-      JSON.stringify({ version: packageDetails.deploymentVersion }),
+      JSON.stringify({
+        version: packageDetails.deploymentVersion,
+        public: packageDetails.public,
+      }),
       '--output-path',
       packageDetails.artifactPath,
     ],

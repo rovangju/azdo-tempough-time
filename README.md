@@ -2,6 +2,8 @@
 
 An Azure DevOps extension for creating enriched [Tempough](https://tempough.com/) time entries from a work item.
 
+[![Install from the Azure DevOps Marketplace](https://img.shields.io/badge/Azure_DevOps-Install_extension-0078D4?style=for-the-badge&logo=azuredevops&logoColor=white)](https://marketplace.visualstudio.com/items?itemName=ITNobody.tempough-time)
+
 > See the [Azure DevOps Marketplace Overview](OVERVIEW.md) for more details.
 
 [![GitHub License](https://img.shields.io/github/license/rovangju/azdo-tempough-time)](LICENSE)

@@ -18,6 +18,7 @@ export function classifyVersionTag(tag) {
     channel: classification.channel,
     deploymentVersion: version,
     overridesFile: development ? 'configs/dev.json' : 'configs/release.json',
+    public: classification.channel === 'release',
     prerelease: classification.prerelease,
     revision,
     tag,

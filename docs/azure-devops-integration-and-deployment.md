@@ -57,18 +57,23 @@ Every supported package uses its four-component version tag as the Azure DevOps 
 | `v0.1.5.8000` | `tempough-time.vsix` | `0.1.5.8000` |
 | `v0.1.5.9999` | `tempough-time.vsix` | `0.1.5.9999` |
 
-Run the same command locally that GitHub Actions runs for a pushed version tag:
+Run the same command locally that GitHub Actions runs for a final release:
 
 ```sh
-make package VERSION=v0.1.5.8001
+make package VERSION=v0.1.5.9999
 ```
 
 The package command does not start a local server. `make dev-azdo` is required only to use the installed development extension because that
 extension loads its assets from `https://localhost:5173`.
 
-Pushing a `v*` tag runs the package workflow, creates a draft GitHub Release with generated notes, and attaches the generated VSIX as a
-durable release asset. Review and publish the draft release in GitHub when ready. The transient GitHub Actions artifact is retained for 7
-days. The workflow does not publish to the Marketplace.
+Run the **Release extension** workflow manually from GitHub Actions and provide a final version tag such as `v0.1.6.9999`. The workflow
+always checks out the default branch, rejects non-final revision channels, and packages the VSIX before it can create a tag. Its
+`production-release` environment approval gate must be approved before the workflow creates the tag and a draft GitHub Release with
+generated notes and the VSIX attached. Review and publish the draft release in GitHub when ready. The transient GitHub Actions artifact is
+retained for 7 days. The workflow does not publish to the Marketplace.
+
+Configure the `production-release` environment in GitHub repository settings with the required release approvers. Enable prevention of
+self-review when the release request must be approved by another maintainer.
 
 ## Deploy a private release
 

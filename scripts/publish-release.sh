@@ -5,6 +5,7 @@ set -euo pipefail
 tag=${TAG:?TAG is required}
 artifact_path=${ARTIFACT_PATH:?ARTIFACT_PATH is required}
 prerelease=${PRERELEASE:?PRERELEASE is required}
+target_commit=${TARGET_COMMIT:?TARGET_COMMIT is required}
 gh_bin=${GH_BIN:-gh}
 
 if [[ ! -f $artifact_path ]]; then
@@ -25,8 +26,8 @@ fi
 
 if [[ $prerelease == true ]]; then
   # Create a draft so maintainers can review generated notes before publishing.
-  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes --prerelease
+  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes --prerelease --target "$target_commit"
 else
   # Final releases are also drafted to prevent automatic publication.
-  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes
+  "$gh_bin" release create "$tag" "$artifact_path" --draft --generate-notes --target "$target_commit"
 fi
